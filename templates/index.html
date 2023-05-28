@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Método de Steffensen</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h1 class="text-center">Método de Steffensen</h1>
+                        <a href="/manual_usuario" class="btn btn-primary btn-manual">Manual de Usuario</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form action="/" method="post">
+                            <div class="form-group">
+                                <label for="equation">Fórmula:</label>
+                                <input type="text" class="form-control" name="equation" id="equation" value="{{ equation }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="x0">Valor inicial (x0):</label>
+                                <input type="number" step="any" class="form-control" name="x0" id="x0" value="{{ x0 }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tolerance">Tolerancia:</label>
+                                <input type="number" step="any" class="form-control" name="tolerance" id="tolerance" value="{{ tolerance }}" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="maxIterations">Máximo de iteraciones:</label>
+                                <input type="number" class="form-control" name="maxIterations" id="maxIterations" value="{{ maxIterations }}" required>
+                            </div>
+
+                            <input type="submit" class="btn btn-primary" value="Calcular">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body">
+                        {% if iterations is not none %}
+                        <h2>Resultados:</h2>
+                        <p>Iteraciones: {{ iterations }}</p>
+                        <p>Aproximación: {{ approximation }}</p>
+                        <p>Valor de la función en la aproximación: {{ func_value }}</p>
+                        <p>Errores:</p>
+                        <ul>
+                            {% for error in errors %}
+                            <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="chart"></div>
+                        <script>
+                            var data = {{ data | tojson }};
+
+                            var layout = {
+                                title: "Gráfica - Método de Steffensen",
+                                xaxis: { title: "x" },
+                                yaxis: { title: "f(x)" }
+                            };
+
+                            Plotly.newPlot("chart", data, layout);
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Integrantes: Roberto Jaraba, Francisco Guerra, Juan Alvarez, Yahir Figueroa</p>
+            <p>Analisis Numerico</p>
+            <p>Ing. Jaider De La Rosa</p>
+            <p>Corporacion universitaria Antonio Jose De Sucre</p>
+        </div>
+    </div>
+</body>
+</html>
