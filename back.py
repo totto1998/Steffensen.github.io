@@ -50,6 +50,11 @@ def index():
 def manual_usuario():
     return render_template('manual_usuario.html')
 
+@app.route('/acerca')
+def acerca():
+    return render_template('acerca.html')
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
